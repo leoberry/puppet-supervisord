@@ -12,11 +12,10 @@ define supervisord::rpcinterface (
   $retries               = undef,
   $config_file_mode      = '0644'
 ) {
-
   include supervisord
 
   # parameter validation
-  if $retries { if !is_integer($retries) { validate_re($retries, '^\d+')}}
+  if $retries { if !is_integer($retries) { validate_re($retries, '^\d+') } }
   validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
   if $cfgreload { validate_bool($cfgreload) }
 
@@ -40,5 +39,4 @@ define supervisord::rpcinterface (
       notify => Class['supervisord::reload'],
     }
   }
-
 }

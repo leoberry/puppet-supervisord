@@ -9,7 +9,7 @@
 # Documentation on parameters available at:
 # http://supervisord.org/configuration.html#program-x-section-settings
 #
-define supervisord::ctlplugin(
+define supervisord::ctlplugin (
   $ctl_factory,
   $ensure      = present,
 ) {
@@ -23,5 +23,4 @@ define supervisord::ctlplugin(
     content => template('supervisord/conf/ctlplugin.erb'),
     order   => 70,
   }
-
 }

@@ -11,7 +11,6 @@ define supervisord::group (
   $priority         = undef,
   $config_file_mode = '0644'
 ) {
-
   include supervisord
 
   # parameter validation
@@ -27,6 +26,6 @@ define supervisord::group (
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/group.erb'),
-    notify  => Class['supervisord::reload']
+    notify  => Class['supervisord::reload'],
   }
 }

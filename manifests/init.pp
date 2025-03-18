@@ -2,7 +2,7 @@
 #
 # This class installs supervisord via pip
 #
-class supervisord(
+class supervisord (
   $package_ensure          = $supervisord::params::package_ensure,
   $package_name            = $supervisord::params::package_name,
   $package_provider        = $supervisord::params::package_provider,
@@ -87,7 +87,6 @@ class supervisord(
   $programs             = {}
 
 ) inherits supervisord::params {
-
   validate_bool($install_pip)
   validate_bool($install_init)
   validate_bool($nodaemon)
@@ -118,10 +117,10 @@ class supervisord(
   validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
   if $pip_proxy { validate_re($pip_proxy, ['^https?:\/\/.*$'], "invalid pip_proxy: ${pip_proxy}") }
 
-  if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
-  if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
-  if ! is_integer($minprocs) { fail("invalid minprocs: ${minprocs}.")}
-  if ! is_integer($inet_server_port) { fail("invalid inet_server_port: ${inet_server_port}.")}
+  if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.") }
+  if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.") }
+  if ! is_integer($minprocs) { fail("invalid minprocs: ${minprocs}.") }
+  if ! is_integer($inet_server_port) { fail("invalid inet_server_port: ${inet_server_port}.") }
 
   if $unix_socket and $inet_server {
     $use_ctl_socket = $ctl_socket
@@ -157,7 +156,7 @@ class supervisord(
   }
 
   # Handle deprecated $environment variable
-  if $environment { notify {'[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment':}}
+  if $environment { notify { '[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment': } }
   $_global_environment = $global_environment ? {
     undef   => $environment,
     default => $global_environment
@@ -208,5 +207,4 @@ class supervisord(
   Class['supervisord::service'] -> Supervisord::Group <| |>
   Class['supervisord::service'] -> Supervisord::Rpcinterface <| |>
   Class['supervisord::reload']  -> Supervisord::Supervisorctl <| |>
-
 }
