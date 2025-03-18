@@ -1,3 +1,4 @@
+## Manage by Puppet
 [program:<%= @name %>]
 command=<%= @command %>
 stdout_logfile=<%= @stdout_logfile_path %>
@@ -45,6 +46,9 @@ killasgroup=<%= @killasgroup %>
 <% end -%>
 <% if @user -%>
 user=<%= @user %>
+<% end -%>
+<% if @group -%>
+group=<%= @group %>
 <% end -%>
 <% if @redirect_stderr != nil -%>
 redirect_stderr=<%= @redirect_stderr %>

@@ -55,21 +55,23 @@ class supervisord::params {
         }
         default: {
           case $facts['os']['release']['major'] {
-            '8': {
+            default: {
               $init_type     = 'systemd'
               $init_script   = '/etc/systemd/system/supervisord.service'
-              $init_defaults = false
+              $init_defaults = '/etc/default/supervisor'
+              $service_name  = 'supervisor'
             }
-            default: {
+            '7': {
               $init_type     = 'init'
               $init_script   = '/etc/init.d/supervisord'
               $init_defaults = '/etc/default/supervisor'
+              $service_name  = 'supervisord'
             }
           }
         }
       }
       $unix_socket_group = 'nogroup'
-      $install_init      = true
+      $install_init      = false
       $executable_path   = '/usr/local/bin'
     }
     default:  {
@@ -77,6 +79,7 @@ class supervisord::params {
       $unix_socket_group = 'nogroup'
       $install_init      = false
       $executable_path   = '/usr/local/bin'
+      $service_name      = 'supervisord'
     }
   }
 
@@ -96,7 +99,6 @@ class supervisord::params {
   $service_manage          = true
   $service_ensure          = 'running'
   $service_enable          = true
-  $service_name            = 'supervisord'
   $service_restart         = undef
   $package_name            = 'supervisor'
   $executable              = "${executable_path}/supervisord"

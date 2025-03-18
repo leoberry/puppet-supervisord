@@ -1,6 +1,6 @@
-#
+# Puppet Managed
 # /etc/systemd/system/supervisord.service
-#
+# 
 
 [Unit]
 Description=supervisord - Supervisor process control system for UNIX
@@ -9,9 +9,12 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=<%= @executable %> -c <%= @config_file %>
-ExecReload=<%= @executable_ctl %> reload
-ExecStop=<%= @executable_ctl %> shutdown
+ExecStart=<%= @executable %> -n -c <%= @config_file %>
+ExecStop=<%= @executable_ctl %> $OPTIONS shutdown
+ExecReload=<%= @executable_ctl %> -c <%= @config_file %> $OPTIONS reload
+KillMode=process
+Restart=on-failure
+RestartSec=50s
 
 [Install]
 WantedBy=multi-user.target

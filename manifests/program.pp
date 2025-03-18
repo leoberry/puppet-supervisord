@@ -25,6 +25,7 @@ define supervisord::program (
   $stopasgroup             = undef,
   $killasgroup             = undef,
   $user                    = undef,
+  $group                   = undef,
   $redirect_stderr         = undef,
   $stdout_logfile          = "program_${name}.log",
   $stdout_logfile_maxbytes = undef,
